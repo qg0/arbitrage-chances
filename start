@@ -4,6 +4,7 @@ try:
     import decimal
     from operator import itemgetter
     import argparse
+    from __future__ import print_function
 except Exception as e:
     print('Make sure to install {0} (pip3 install {0}).'.format(str(e).split("'")[1]))
     exit()
