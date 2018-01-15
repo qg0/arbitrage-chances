@@ -17,12 +17,15 @@ defaults:
   + sets the number of coins shown
 
 I usually run it with these settings:   
-`start --exchanges Binance Kucoin Etherdelta Cryptopia Bittrex Bitfinex Poloniex --pairs ETH BTC LTC`
+`python3 ./start --exchanges Binance Kucoin Etherdelta Cryptopia Bittrex Bitfinex Poloniex --pairs ETH BTC LTC`
 
-if you made some money, tips are appreciated and help further development.
+if you made some money, tips and stars are appreciated and help further development.
 
 coin|address
 |---|---|
 |LTC |`LPCyB2yExbZdJUNRyNhhV8EYD7zU5MqrX7`|
 |BTC |`1GNUsALbvyNwYVGSsX7LGRKFtgdnH6s3Rg`|
 |ETH |`0x293a25bc3e1da86bb3322cf940e7baf49f52cae4`|
+
+
+At 25 stars, I will make an optimised go version for all to use - executable so it's easier to use.
