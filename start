@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
+from __future__ import print_function
 try:
     import pymarketcap
     import decimal
     from operator import itemgetter
-    import ccxt
     import argparse
-    from __future__ import print_function
 except Exception as e:
     print('Make sure to install {0} (pip3 install {0}).'.format(str(e).split("'")[1]))
     exit()
@@ -28,7 +27,6 @@ coin_format = '{: <25} {: >6}% {: >10} {: >15} {: <10} {: <10} {: <15} {: <5}'
 
 if not args.simple:
     print('CURRENT SETTINGS\n* MINIMUM_PERCENT_VOL:{}\n* TRADING_PAIRS:{}\n* COINS_SHOWN:{}\n* EXCHANGES:{}\n* ALL_TRADING_PAIRS:{}\n* ALL_EXCHANGES:{}\n'.format(args.minimum_vol,args.pairs,args.coins_shown,lowercase_exchanges,all_trading_pairs,all_exchanges))
-exchange = getattr(ccxt,'binance')()
 # retrieve coin data
 for coin in cmc.ticker():
     try:
@@ -56,32 +54,11 @@ for coin in cmc.ticker():
                 worst_exchange = market['exchange']
                 worst_pair = trades_into
     if has_markets:
-        exchange = getattr(ccxt,best_exchange.lower())()
-        print(coin['id'])
-        try:
-            book = exchange.fetch_order_book('{}/{}'.format(coin["symbol"],best_pair))
-        except Exception:
-            try:
-                book = exchange.fetch_order_book('{}/{}'.format(best_pair,coin["symbol"]))
-            except Exception:
-                book = exchange.fetch_order_book('{}/{}'.format(coin["id"].upper(),best_pair))
-        print(best_exchange,best_pair,book["asks"][0],book['bids'][0])
-        exchange = getattr(ccxt,worst_exchange.lower())()
-        try:
-            book = exchange.fetch_order_book('{}/{}'.format(coin["symbol"],worst_pair))
-        except Exception:
-            try:
-                book = exchange.fetch_order_book('{}/{}'.format(worst_pair,coin["symbol"]))
-            except Exception:
-                book = exchange.fetch_order_book('{}/{}'.format(coin["id"].upper(),worst_pair))
-
-        print(worst_exchange,worst_pair,book['bids'][0])
-        print('\n')
         info.append([coin['name'],round((best_price/worst_price-1)*100,2),worst_price,worst_exchange,worst_pair,best_price,best_exchange,best_pair])
     elif not args.simple:
         print(coin['name'],'had no markets that fit the criteria.')
 
-    #print('[{}/100]'.format(count),end='\r')
+    print('[{}/100]'.format(count),end='\r')
     count += 1
 
 # show data
