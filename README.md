@@ -27,5 +27,10 @@ coin|address
 |BTC |`1GNUsALbvyNwYVGSsX7LGRKFtgdnH6s3Rg`|
 |ETH |`0x293a25bc3e1da86bb3322cf940e7baf49f52cae4`|
 
-
+Note:
++ Arbitrage usually exists for a reason. Usually this is:
+  + No wallet withdrawal / Deposit for a coin
+  + High withdrawal fees or long wait time
+  + Very low volume
+  
 At 25 stars, I will make an optimised go version for all to use - executable so it's easier to use.
