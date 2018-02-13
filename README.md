@@ -1,7 +1,6 @@
 # arbitrage-chances
 Finding the best arbitrage opportunities for the top 100 cryptocurrencies.
 
-
 `start [--pairs -p] [--exchanges -e] [--minimum_volume -m] [--simple -s] [--coins_shown -c]`
 
 defaults:
@@ -18,6 +17,8 @@ defaults:
 
 I usually run it with these settings:   
 `python3 ./start --exchanges Binance Kucoin Etherdelta Cryptopia Bittrex Bitfinex Poloniex --pairs ETH BTC LTC`
+
+If you want a feature, please open an issue! Thanks.
 
 if you made some money, tips and stars are appreciated and help further development.
 
