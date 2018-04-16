@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-from __future__ import print_function
 try:
     import pymarketcap
     import decimal
     from operator import itemgetter
     import argparse
 except Exception as e:
-    print('Make sure to install {0} (pip3 install {0}).'.format(str(e).split("'")[1]))
+    print('Make sure to install {0} (python3 -m pip {0}.'.format(str(e).split("'")[1]))
     exit()
 
 # arguments and setup
@@ -28,7 +27,7 @@ coin_format = '{: <25} {: >6}% {: >10} {: >15} {: <10} {: <10} {: <15} {: <5}'
 if not args.simple:
     print('CURRENT SETTINGS\n* MINIMUM_PERCENT_VOL:{}\n* TRADING_PAIRS:{}\n* COINS_SHOWN:{}\n* EXCHANGES:{}\n* ALL_TRADING_PAIRS:{}\n* ALL_EXCHANGES:{}\n'.format(args.minimum_vol,args.pairs,args.coins_shown,lowercase_exchanges,all_trading_pairs,all_exchanges))
 # retrieve coin data
-for coin in cmc.ticker():
+for coin in cmc.ticker(limit=100):
     try:
         markets = cmc.markets(coin["id"])
     except Exception as e:
@@ -41,17 +40,17 @@ for coin in cmc.ticker():
     worst_exchange = ''
     worst_pair = ''
     has_markets = False
-    for market in markets:
-        trades_into = market["pair"].replace(coin["symbol"],"").replace("-","")
-        if market['percent_volume'] >= args.minimum_vol and market['updated'] and (trades_into in args.pairs or all_trading_pairs) and (market['exchange'].lower() in lowercase_exchanges or all_exchanges):
+    for market in markets["markets"]:
+        trades_into = market["pair"].replace(coin["symbol"],"").replace("-","").replace("/","")
+        if market['percent_volume'] >= args.minimum_vol and market['updated'] and (trades_into in args.pairs or all_trading_pairs) and (market['source'].lower() in lowercase_exchanges or all_exchanges):
             has_markets = True
-            if market['price_usd'] >= best_price:
-                best_price = market['price_usd']
-                best_exchange = market['exchange']
+            if market['price'] >= best_price:
+                best_price = market['price']
+                best_exchange = market['source']
                 best_pair = trades_into
-            if market['price_usd'] <= worst_price:
-                worst_price = market['price_usd']
-                worst_exchange = market['exchange']
+            if market['price'] <= worst_price:
+                worst_price = market['price']
+                worst_exchange = market['source']
                 worst_pair = trades_into
     if has_markets:
         info.append([coin['name'],round((best_price/worst_price-1)*100,2),worst_price,worst_exchange,worst_pair,best_price,best_exchange,best_pair])
