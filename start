@@ -15,6 +15,7 @@ parser.add_argument('-p','--pairs',nargs='*',default=[],help='Pairs the coins ca
 parser.add_argument('-c','--coins_shown',type=int,default=10,help='Number of coins to show')
 parser.add_argument('-e','--exchanges',nargs='*',help='Acceptable Exchanges - default=all',default=[])
 parser.add_argument('-s','--simple',help='Toggle off errors and settings',default=False,action="store_true")
+parser.add_argument('-t','--top',type=int, help='Set the number of coins to run with',default=100)
 args = parser.parse_args()
 cmc = pymarketcap.Pymarketcap()
 info = []
@@ -25,9 +26,9 @@ all_trading_pairs = not bool(args.pairs)
 coin_format = '{: <25} {: >6}% {: >10} {: >15} {: <10} {: <10} {: <15} {: <5}'
 
 if not args.simple:
-    print('CURRENT SETTINGS\n* MINIMUM_PERCENT_VOL:{}\n* TRADING_PAIRS:{}\n* COINS_SHOWN:{}\n* EXCHANGES:{}\n* ALL_TRADING_PAIRS:{}\n* ALL_EXCHANGES:{}\n'.format(args.minimum_vol,args.pairs,args.coins_shown,lowercase_exchanges,all_trading_pairs,all_exchanges))
+    print('CURRENT SETTINGS\n* MINIMUM_PERCENT_VOL:{}\n* TRADING_PAIRS:{}\n* COINS_SHOWN:{}\n* EXCHANGES:{}\n* ALL_TRADING_PAIRS:{}\n* ALL_EXCHANGES:{}\n* TOP:{}\n'.format(args.minimum_vol,args.pairs,args.coins_shown,lowercase_exchanges,all_trading_pairs,all_exchanges,args.top))
 # retrieve coin data
-for coin in cmc.ticker(limit=100):
+for coin in cmc.ticker(limit=args.top):
     try:
         markets = cmc.markets(coin["id"])
     except Exception as e:
@@ -57,7 +58,7 @@ for coin in cmc.ticker(limit=100):
     elif not args.simple:
         print(coin['name'],'had no markets that fit the criteria.')
 
-    print('[{}/100]'.format(count),end='\r')
+    print('[{}/{}]'.format(count, args.top),end='\r')
     count += 1
 
 # show data
