@@ -24,17 +24,11 @@ defaults:
 I usually run it with these settings:   
 `python3 ./start --exchanges Binance Kucoin Etherdelta Cryptopia Bittrex Bitfinex Poloniex --pairs ETH BTC LTC`
 
-If you want a feature, please open an issue! Thanks.
-
-coin|address
-|---|---|
-|LTC |`LPCyB2yExbZdJUNRyNhhV8EYD7zU5MqrX7`|
-|BTC |`1GNUsALbvyNwYVGSsX7LGRKFtgdnH6s3Rg`|
-|ETH |`0x293a25bc3e1da86bb3322cf940e7baf49f52cae4`|
+If you want a feature or find a bug, please open an issue! Thanks.
 
 Note:
 + Arbitrage usually exists for a reason. Usually this is:
-  + No wallet withdrawal / Deposit for a coin
-  + High withdrawal fees or long wait time
+  + No wallet withdrawal or deposit for a coin
+  + High withdrawal fees or long withdrawal time
   + Very low volume
  
